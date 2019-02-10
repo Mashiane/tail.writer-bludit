@@ -1,0 +1,15 @@
+#jseditor {
+	padding: 10px 2% !important;
+	max-height: none !important;
+}
+
+.tail-writer-object {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	align-items: stretch;
+}
+
+.tail-writer-preview img {
+	max-width: 100%;
+}
