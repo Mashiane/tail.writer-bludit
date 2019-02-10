@@ -3,3 +3,5 @@ A light-weight, powerful and configurable Open Source GitHub Flavored Markdown e
 
 This plugin use the Tail.Writer editor by pytesNET.
 - https://github.pytes.net/tail.writer/
+
+![screenshot-tail-writer](https://raw.githubusercontent.com/bludit-plugins/tail.writer/master/screenshot.png)
