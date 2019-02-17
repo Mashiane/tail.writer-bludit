@@ -51,12 +51,19 @@ $html = <<<EOF
 	// Returns the content of the editor
 	// Function required for Bludit
 	function editorGetContent() {
-		return document.getElementById("jseditor").value;
+		return document.getElementById("js-tail-writer").value;
 	}
 
 	document.addEventListener("DOMContentLoaded", function(){
-		tailWriter = tail.writer("#jseditor")[0];
-		console.log(tailWriter);
+		var area = document.querySelector("#jseditor"),
+			text = document.createElement("textarea");
+			text.id = "js-tail-writer";
+			text.value = area.innerHTML;
+			text.className = area.className;
+
+		area.innerHTML = "";
+		area.appendChild(text, area);
+		tailWriter = tail.writer("#js-tail-writer")[0];
 	});
 </script>
 EOF;
