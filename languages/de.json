@@ -1,0 +1,7 @@
+{
+	"plugin-data":
+	{
+		"name": "tail.writer",
+		"description": "Ein ordentlicher, starker und erweiterbarer Markup ([GitHub Flavored] Markdown, BBCode, Textile) Editor, geschrieben in purem JavaScript!"
+	}
+}
