@@ -3,12 +3,13 @@
  |  tail.writer 4 Bludit
  |  @file       ./plugin.php
  |  @author     SamBrishes <sam@pytes.net>
- |  @version    0.3.3 [0.3.2] - Alpha
+ |  @version    0.4.0 [0.3.2] - Alpha
  |
  |  @website    https://github.com/pytesNET/tail.writer-bludit
  |  @license    X11 / MIT License
  |  @copyright  Copyright © 2019 pytesNET <info@pytes.net>
  */
+
 	class PluginTailWriter extends Plugin{
 		/*
 		 |	LIST OF CONTROLLERS TO LOAD
@@ -18,27 +19,130 @@
 		);
 
 		/*
+		 |	HELPER :: SELECT OPTION
+		 |	@version	0.4.0 [0.4.0]
+		 */
+		public function selected($value, $compare, $echo = true){
+			if($this->getValue($value) == $compare){
+				$selected = 'selected="selected"';
+			} else {
+				$selected = '';
+			}
+			if(!$echo){
+				return $selected;
+			}
+			print($selected);
+		}
+
+		/*
+		 |	HOOK :: INIT PLUGIN
+		 |	@version	0.4.0 [0.4.0]
+		 */
+		public function init(){
+			$this->dbFields = array(
+				"markup"	=> "markdown",
+				"locale"  	=> "en",
+				"design"	=> "github"
+			);
+		}
+
+		/*
+		 |	HOOK :: PLUGIN SETTINGS
+		 |	@version	0.4.0 [0.4.0]
+		 */
+		public function form(){
+			global $L;
+
+			ob_start();
+			?>
+				<div>
+					<label><?php echo $L->get("Design"); ?></label>
+					<select name="design">
+						<option value="white" <?php $this->selected("design", "white"); ?>><?php echo $L->get("White") ?></option>
+						<option value="dark" <?php $this->selected("design", "dark"); ?>><?php echo $L->get("Dark") ?></option>
+						<option value="github" <?php $this->selected("design", "github"); ?>><?php echo $L->get("GitHub") ?></option>
+					</select>
+				</div>
+
+				<div>
+					<label><?php echo $L->get("Interface Language"); ?></label>
+					<select name="locale">
+						<option value="en" <?php $this->selected("locale", "en"); ?>><?php echo $L->get("English") ?></option>
+						<option value="de" <?php $this->selected("locale", "de"); ?>><?php echo $L->get("German") ?></option>
+					</select>
+				</div>
+
+				<div>
+					<label><?php echo $L->get("Markup Language"); ?></label>
+					<select name="markup">
+						<option value="markdown" <?php $this->selected("markup", "markdown"); ?>>Markdown</option>
+						<option value="textile" <?php $this->selected("markup", "textile"); ?>>Textile</option>
+						<option value="bbcode" <?php $this->selected("markup", "bbcode"); ?>>BBCode</option>
+					</select>
+					<span class="tip"><?php echo $L->get("markup-support"); ?></span>
+				</div>
+			<?php
+			$content = ob_get_contents();
+			ob_end_clean();
+			return $content;
+		}
+
+		/*
 		 |	HOOK :: ADMIN HEAD
-		 |	@since	0.3.3
+		 |	@version	0.4.0 [0.3.2]
 		 */
 		public function adminHead(){
 			if(!in_array($GLOBALS["ADMIN_CONTROLLER"], $this->loadOnController)){
 				return false;
 			}
 
-			// CSS
-			$html  = '<link type="text/css" rel="stylesheet" href="' . $this->htmlPath() . 'vendors/tail-writer/css/tail.writer.css" />' . PHP_EOL;
-			$html .= '<link type="text/css" rel="stylesheet" href="' . $this->htmlPath() . 'vendors/tail-writer/css/tail.writer.github.css" />' . PHP_EOL;
+			ob_start();
+			?>
+				<link type="text/css" rel="stylesheet" href="<?php echo $this->htmlPath(); ?>css/tail.writer-<?php echo $this->getValue("design"); ?>.min.css" />
+				<style type="text/css">
+					.tail-writer{
+						margin: 15px 0 0 0;
+					}
+					.tail-writer textarea#jseditor{
+					    width: 100%;
+						height: auto;
+						min-height: 300px;
+						max-height: inherit !important;
+						padding: 20px !important;
+						font-size: 16px;
+						line-height: 24px;
+						border: 1px solid #d1d5da;
+						background-color: #f6f8fa;
+					}
+					.tail-writer textarea#jseditor:hover{
+						border-color: #c1c5ca;
+						background-color: #f6f8fa;
+					}
+					.tail-writer textarea#jseditor:focus{
+						border-color: #2188ff;
+						background-color: #ffffff;
+					}
+				</style>
 
-			// JavaScript
-			$html .= '<script type="text/javascript" src="' . $this->htmlPath() . 'vendors/marked/marked.min.js"></script>' . PHP_EOL;
-			$html .= '<script type="text/javascript" src="' . $this->htmlPath() . 'vendors/tail-writer/js/tail.writer.min.js"></script>' . PHP_EOL;
-			return $html;
+				<script type="text/javascript" src="<?php echo $this->htmlPath(); ?>js/marked.min.js"></script>
+				<script type="text/javascript" src="<?php echo $this->htmlPath(); ?>js/bbsolid.min.js"></script>
+				<script type="text/javascript" src="<?php echo $this->htmlPath(); ?>js/textile.min.js"></script>
+				<script type="text/javascript" src="<?php echo $this->htmlPath(); ?>js/tail.writer-full.min.js"></script>
+				<script type="text/javascript">
+					tail.writer.hook("init", "bludit", function(){
+						this.e.editor.className = this.e.editor.className.replace("h-100", "");
+						this.e.editor.focus();
+					});
+				</script>
+			<?php
+			$content = ob_get_contents();
+			ob_end_clean();
+			return $content;
 		}
 
 		/*
 		 |	HOOK :: ADMIN HEAD
-		 |	@since	0.3.3
+		 |	@version	0.4.0 [0.3.3]
 		 */
 		public function adminBodyEnd(){
 			if(!in_array($GLOBALS["ADMIN_CONTROLLER"], $this->loadOnController)){
@@ -46,108 +150,63 @@
 			}
 
 			ob_start();
-			if(version_compare(BLUDIT_VERSION, "3.8.0", ">=")){
-				$this->version38();
-			} else {
-				$this->version35();
-			}
+			?>
+				<script type="text/javascript">
+					var WriterEditor = null;
+
+					function editorInsertMedia(file){
+						WriterEditor.writeContent("![" + WriterEditor.translate("imageTitle") + "](" + file + ")");
+						$("#jsmediaManagerModal").on("hidden.bs.modal", function(){
+							WriterEditor.e.editor.focus();
+						});
+					}
+
+					function editorGetContent(){
+						var content = WriterEditor.getContent();
+						if(WriterEditor.con.markup === "textile"){
+							content = textile(content);
+						}
+						if(WriterEditor.con.markup === "bbcode"){
+							content = tail.BBSolid(content, {
+				                prettyPrint: false,
+				                showLineBreaks: false
+				            });
+						}
+						return content;
+					}
+
+					<?php if(version_compare(BLUDIT_VERSION, "3.8.0", ">=")){ ?>
+						document.addEventListener("DOMContentLoaded", function(){
+							WriterEditor = tail.writer("#jseditor", {
+								height: ["400px", "700px"],
+								toolbar: "full",
+								locale: "<?php echo $this->getValue("locale"); ?>",
+								markup: "<?php echo $this->getValue("markup"); ?>",
+							});
+						});
+					<?php } else { ?>
+						document.addEventListener("DOMContentLoaded", function(){
+							var area = document.querySelector("#jseditor"),
+								text = document.createElement("textarea");
+								text.id = "js-tail-writer";
+								text.value = area.innerHTML;
+								text.className = area.className;
+
+							// Instance
+							area.innerHTML = "";
+							area.appendChild(text, area);
+							WriterEditor = tail.writer("#jseditor", {
+								height: ["400px", "700px"],
+								toolbar: "full",
+								locale: "<?php echo $this->getValue("locale"); ?>",
+								markup: "<?php echo $this->getValue("markup"); ?>",
+							});
+						});
+					<?php } ?>
+				</script>
+			<?php
 			$content = ob_get_contents();
 			ob_end_clean();
 			return $content;
-		}
-
-		/*
-		 |	INTERNAL :: SCRIPT FOR VERSION >= 3.8.0
-		 |	@since	0.3.3
-		 */
-		private function version38(){
-			?>
-				<script type="text/javascript">
-					var WriterEditor = null;
-
-					function editorInsertMedia(file){
-						var select = WriterEditor.selection(),
-							__1 = WriterEditor.val.slice(0, select.start),
-							__2 = WriterEditor.val.slice(select.start, select.end),
-							__3 = WriterEditor.val.slice(select.end);
-						WriterEditor.write(__1 + "![Image description](" + file + ")" + __3);
-					}
-
-					function editorGetContent(){
-						return document.getElementById("jseditor").value;
-					}
-
-					document.addEventListener("DOMContentLoaded", function(){
-						WriterEditor = tail.writer("#jseditor")[0];
-					});
-				</script>
-				<style type="text/css">
-					#jseditor{
-						padding: 15px !important;
-						max-height: none !important;
-					}
-					.tail-writer-object{
-						display: flex;
-						flex-direction: column;
-						flex: 1;
-						align-items: stretch;
-					}
-					.tail-writer-preview img{
-						max-width: 100%;
-					}
-				</style>
-			<?php
-		}
-
-		/*
-		 |	INTERNAL :: SCRIPT FOR VERSION < 3.8.0
-		 |	@since	0.3.3
-		 */
-		private function version35(){
-			?>
-				<script type="text/javascript">
-					var WriterEditor = null;
-
-					function editorInsertMedia(file){
-						var select = WriterEditor.selection(),
-							__1 = WriterEditor.val.slice(0, select.start),
-							__2 = WriterEditor.val.slice(select.start, select.end),
-							__3 = WriterEditor.val.slice(select.end);
-						WriterEditor.write(__1 + "![Image description](" + file + ")" + __3);
-					}
-
-					function editorGetContent(){
-						return document.getElementById("js-tail-writer").value;
-					}
-
-					document.addEventListener("DOMContentLoaded", function(){
-						var area = document.querySelector("#jseditor"),
-							text = document.createElement("textarea");
-							text.id = "js-tail-writer";
-							text.value = area.innerHTML;
-							text.className = area.className;
-
-						// Instance
-						area.innerHTML = "";
-						area.appendChild(text, area);
-						WriterEditor = tail.writer("#js-tail-writer")[0];
-					});
-				</script>
-				<style type="text/css">
-					#jseditor{
-						padding: 10px 0 !important;
-						max-height: none !important;
-					}
-					.tail-writer-object{
-						display: flex;
-						flex-direction: column;
-						flex: 1;
-						align-items: stretch;
-					}
-					.tail-writer-preview img{
-						max-width: 100%;
-					}
-				</style>
-			<?php
 		}
 	}
