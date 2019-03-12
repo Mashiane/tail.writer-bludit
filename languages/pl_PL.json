@@ -1,0 +1,21 @@
+{
+	"plugin-data":
+	{
+		"name": "tail.writer",
+		"description": "Schludny, rozszerzalny edytor tekstu (Markdown, BBCode, Textile) stworzony przy użyciu Vanilla JavaScript!"
+	},
+	"tail-writer-01": "Design",
+	"tail-writer-02": "Jasny",
+	"tail-writer-03": "Ciemny",
+	"tail-writer-04": "GitHub",
+	"tail-writer-05": "Język interfejsu",
+	"tail-writer-06": "Język znaczników",
+	"tail-writer-07": "Znaczniki Textile i BBCode będą parsowane, i zapisywane do HTML ze względu na brak bezpośredniego wsparcia dla tych języków w bludit poza językiem markdown.",
+
+	"tail-writer-en": "English",
+	"tail-writer-de": "German",
+	"tail-writer-pl": "Polski",
+
+	"tail-writer-translation": "tłumaczenie",
+	"tail-writer-translator": "Wojciech Jodła"
+}

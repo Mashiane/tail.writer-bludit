@@ -4,13 +4,17 @@
 		"name": "tail.writer",
 		"description": "A tidy, powerful and extendable Markup ([GitHub Flavored] Markdown, BBCode, Textile) Editor, written in Vanilla JavaScript!"
 	},
-	"Design": "Design",
-	"White": "White",
-	"Dark": "Dark",
-	"GitHub": "GitHub",
-	"English": "English",
-	"German": "German",
-	"Interface Language": "Interface Language",
-	"Markup Language": "Markup Language",
-	"markup-support": "The Textile and BBCode Markups will be parsed and stored directly as HTML, because Bludit currently doesn't support to use other Markup languages next to Markdown!"
+	"tail-writer-01": "Design",
+	"tail-writer-02": "White",
+	"tail-writer-03": "Dark",
+	"tail-writer-04": "GitHub",
+	"tail-writer-05": "Interface Language",
+	"tail-writer-06": "Markup Language",
+	"tail-writer-07": "The Textile and BBCode Markups will be parsed and stored directly as HTML, because Bludit currently doesn't support to use other Markup languages next to Markdown!",
+
+	"tail-writer-en": "English",
+	"tail-writer-de": "German",
+	"tail-writer-pl": "Polish",
+
+	"tail-writer-translation": "Translation"
 }

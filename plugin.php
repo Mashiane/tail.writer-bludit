@@ -56,31 +56,44 @@
 			ob_start();
 			?>
 				<div>
-					<label><?php echo $L->get("Design"); ?></label>
+					<label><?php echo $L->get("tail-writer-01"); ?></label>
 					<select name="design">
-						<option value="white" <?php $this->selected("design", "white"); ?>><?php echo $L->get("White") ?></option>
-						<option value="dark" <?php $this->selected("design", "dark"); ?>><?php echo $L->get("Dark") ?></option>
-						<option value="github" <?php $this->selected("design", "github"); ?>><?php echo $L->get("GitHub") ?></option>
+						<option value="white" <?php $this->selected("design", "white"); ?>><?php echo $L->get("tail-writer-02") ?></option>
+						<option value="dark" <?php $this->selected("design", "dark"); ?>><?php echo $L->get("tail-writer-03") ?></option>
+						<option value="github" <?php $this->selected("design", "github"); ?>><?php echo $L->get("tail-writer-04") ?></option>
 					</select>
 				</div>
 
 				<div>
-					<label><?php echo $L->get("Interface Language"); ?></label>
+					<label><?php echo $L->get("tail-writer-05"); ?></label>
 					<select name="locale">
-						<option value="en" <?php $this->selected("locale", "en"); ?>><?php echo $L->get("English") ?></option>
-						<option value="de" <?php $this->selected("locale", "de"); ?>><?php echo $L->get("German") ?></option>
+						<option value="en" <?php $this->selected("locale", "en"); ?>><?php echo $L->get("tail-writer-en") ?></option>
+						<option value="de" <?php $this->selected("locale", "de"); ?>><?php echo $L->get("tail-writer-de") ?></option>
+						<option value="pl" <?php $this->selected("locale", "pl"); ?>><?php echo $L->get("tail-writer-pl") ?></option>
 					</select>
 				</div>
 
 				<div>
-					<label><?php echo $L->get("Markup Language"); ?></label>
+					<label><?php echo $L->get("tail-writer-06"); ?></label>
 					<select name="markup">
 						<option value="markdown" <?php $this->selected("markup", "markdown"); ?>>Markdown</option>
 						<option value="textile" <?php $this->selected("markup", "textile"); ?>>Textile</option>
 						<option value="bbcode" <?php $this->selected("markup", "bbcode"); ?>>BBCode</option>
 					</select>
-					<span class="tip"><?php echo $L->get("markup-support"); ?></span>
+					<span class="tip"><?php echo $L->get("tail-writer-07"); ?></span>
 				</div>
+
+				<?php
+					$db = $L->getDB();
+					if(array_key_exists("tail-writer-translator", $db)){
+						?>
+							<div style="margin:30px 0 15px 0;">
+								<b><?php echo $L->get("tail-writer-translation"); ?>: </b>
+								<?php echo $L->get("tail-writer-translator"); ?>
+							</div>
+						<?php
+					}
+				?>
 			<?php
 			$content = ob_get_contents();
 			ob_end_clean();
