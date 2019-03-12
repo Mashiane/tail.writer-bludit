@@ -2,11 +2,9 @@ tail.writer - The flavored Markup Editor for Bludit
 ===================================================
 The **tail.writer** script is a neat, powerful, highly extend- and translatable Markup Editor,
 written in Vanilla JavaScript. It currently supports the [GitHub Flavored] Markdown, BBCode and
-Textile Markup languages.
-
-**Note:** This repository contains the [Bludit](https://www.bludit.com) Plugin (and version) of the
-[tail.writer](https://www.github.com/pytesNET/tail.writer) JavaScript package. So you can use this
-editor outside of Bludit too!
+Textile Markup languages. **Note:** This repository contains the [Bludit](https://www.bludit.com)
+Plugin (and version) of the [tail.writer](https://www.github.com/pytesNET/tail.writer) JavaScript
+package. So you can use this editor outside of Bludit too!
 
 [Wanna see **tail.writer** in action?](https://github.pytes.net/tail.writer)
 
