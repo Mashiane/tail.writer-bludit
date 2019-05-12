@@ -1,5 +1,10 @@
 tail.writer - The flavored Markup Editor for Bludit
 ===================================================
+[![Bludit](https://s.pytes.me/5ad229d2)](https://www.bludit.com)
+[![Version](https://s.pytes.me/332e930a)](https://s.pytes.me/763b4e2d)
+[![Support Me](https://s.pytes.me/4a1717aa)](https://buymeacoffee.com/pytesNET)
+[![License](https://s.pytes.me/8257ac72)](LICENSE.md)
+
 The **tail.writer** script is a neat, powerful, highly extend- and translatable Markup Editor,
 written in Vanilla JavaScript. It currently supports the [GitHub Flavored] Markdown, BBCode and
 Textile Markup languages. **Note:** This repository contains the [Bludit](https://www.bludit.com)
@@ -9,6 +14,14 @@ package. So you can use this editor outside of Bludit too!
 [Wanna see **tail.writer** in action?](https://github.pytes.net/tail.writer)
 
 [Wanna translate **tail.writer** in your language?](https://github.com/pytesNET/tail.writer/wiki/Help-Translating)
+
+Support
+-------
+<p align="center" atyle="text-align:center">
+You really like my <b>tail.writer</b> plugin and want to support me and all of my projects?<br/>
+Then I would be extremely grateful for a coffee! (<b>Thanks to all Supporters</b>)<br/><br/>
+<a href="https://www.buymeacoffee.com/pytesNET"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" title="Buy Me A Coffee" /></a>
+</p>
 
 Requirements
 ------------
